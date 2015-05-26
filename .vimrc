@@ -33,7 +33,7 @@ Bundle 'Lokaltog/powerline', {'rtp': 'powerline/bindings/vim/'}
 Plugin 'AutoComplPop'
 Plugin 'mattn/emmet-vim'
 Plugin 'css-color-preview'
-Plugin 'rails'
+Plugin 'rails.vim'
 Plugin 'Syntastic'
 Plugin 'rizzatti/dash.vim'
 Plugin 'ryanss/vim-hackernews'
