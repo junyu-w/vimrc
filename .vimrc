@@ -37,6 +37,7 @@ Plugin 'rails'
 Plugin 'Syntastic'
 Plugin 'rizzatti/dash.vim'
 Plugin 'ryanss/vim-hackernews'
+Plugin 'flazz/vim-colorschemes'
 
 " All of your Plugins must be added before the following line
 call vundle#end()            " required
@@ -218,9 +219,10 @@ nnoremap <C-L> :nohl<CR><C-L>
 if has('gui_running')
   set background=dark
   "colorscheme atom-dark
-  colorscheme solarized
+  "colorscheme solarized
   "colorscheme grb256
   "colorscheme jellybeans
+  colorscheme Monokai
 else
   colorscheme default
 endif
@@ -234,8 +236,7 @@ set t_Co=256
 set fillchars+=stl:\ ,stlnc:\
 set term=xterm-256color
 set termencoding=utf-8
-set guifont=Monaco\ for\ Powerline:h13
-Bundle 'wakatime/vim-wakatime'
+set guifont=DejaVu\ Sans\ Mono\ for\ Powerline:h12
 
 
 
@@ -248,4 +249,3 @@ let g:syntastic_always_populate_loc_list = 1
 let g:syntastic_auto_loc_list = 1
 let g:syntastic_check_on_open = 1
 let g:syntastic_check_on_wq = 0
-
