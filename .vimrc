@@ -2,6 +2,9 @@
 set nocompatible              " be iMproved, required
 filetype off                  " required
 
+"dealing with fish shell cannot handle Syntastic
+set shell=/bin/bash
+
 " set the runtime path to include Vundle and initialize
 set rtp+=~/.vim/bundle/Vundle.vim
 call vundle#begin()
@@ -20,24 +23,25 @@ Plugin 'L9'
 " Git plugin not hosted on GitHub
 Plugin 'git://git.wincent.com/command-t.git'
 " git repos on your local machine (i.e. when working on your own plugin)
-Plugin 'file:///home/gmarik/path/to/plugin'
+" Plugin 'file:///home/gmarik/path/to/plugin'
 " The sparkup vim script is in a subdirectory of this repo called vim.
 " Pass the path to set the runtimepath properly.
 Plugin 'rstacruz/sparkup', {'rtp': 'vim/'}
 " Avoid a name conflict with L9
-Plugin 'user/L9', {'name': 'newL9'}
+" Plugin 'user/L9', {'name': 'newL9'}
 
 Plugin 'The-NERD-tree'
 Bundle 'Lokaltog/powerline', {'rtp': 'powerline/bindings/vim/'}
 "Plugin 'HTML-AutoCloseTag'
 Plugin 'AutoComplPop'
 Plugin 'mattn/emmet-vim'
-Plugin 'css-color-preview'
 Plugin 'rails.vim'
 Plugin 'Syntastic'
-Plugin 'rizzatti/dash.vim'
 Plugin 'ryanss/vim-hackernews'
 Plugin 'flazz/vim-colorschemes'
+Plugin 'pangloss/vim-javascript'
+Plugin 'burnettk/vim-angular'
+Plugin 'othree/javascript-libraries-syntax.vim'
 
 " All of your Plugins must be added before the following line
 call vundle#end()            " required
@@ -221,8 +225,8 @@ if has('gui_running')
   "colorscheme atom-dark
   "colorscheme solarized
   "colorscheme grb256
-  "colorscheme jellybeans
-  colorscheme Monokai
+  colorscheme jellybeans
+  "colorscheme Monokai
 else
   colorscheme default
 endif
@@ -236,7 +240,7 @@ set t_Co=256
 set fillchars+=stl:\ ,stlnc:\
 set term=xterm-256color
 set termencoding=utf-8
-set guifont=DejaVu\ Sans\ Mono\ for\ Powerline:h12
+set guifont=DejaVu\ Sans\ Mono\ for\ Powerline:h13
 
 
 
@@ -249,3 +253,8 @@ let g:syntastic_always_populate_loc_list = 1
 let g:syntastic_auto_loc_list = 1
 let g:syntastic_check_on_open = 1
 let g:syntastic_check_on_wq = 0
+
+
+"------for js syntax libraries
+let g:used_javascript_libs = 'underscore,jquery,angularjs,angularui,react'
+
