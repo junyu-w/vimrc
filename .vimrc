@@ -240,7 +240,9 @@ set t_Co=256
 set fillchars+=stl:\ ,stlnc:\
 set term=xterm-256color
 set termencoding=utf-8
-set guifont=DejaVu\ Sans\ Mono\ for\ Powerline:h13
+"set guifont=DejaVu\ Sans\ Mono\ for\ Powerline:h13
+set guifont=Monaco\ for\ Powerline:h13
+
 
 
 
