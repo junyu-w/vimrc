@@ -225,17 +225,11 @@ nnoremap <C-L> :nohl<CR><C-L>
 if has('gui_running')
   set background=dark
   "colorscheme solarized
-<<<<<<< HEAD
   " this is the atom dark color scheme
   "colorscheme grb256 
   "colorscheme jellybeans
   "colorscheme Monokai
   colorscheme atom
-=======
-  "colorscheme grb256
-  colorscheme jellybeans
-  "colorscheme Monokai
->>>>>>> d4e1fc64932e2b468332fe1e491e5841d9a877bb
 else
   colorscheme default
 endif
@@ -249,15 +243,8 @@ set t_Co=256
 set fillchars+=stl:\ ,stlnc:\
 set term=xterm-256color
 set termencoding=utf-8
-<<<<<<< HEAD
 set guifont=DejaVu\ Sans\ Mono\ for\ Powerline:h14
 "set guifont=Monaco\ for\ Powerline:h13
-=======
-"set guifont=DejaVu\ Sans\ Mono\ for\ Powerline:h13
-set guifont=Monaco\ for\ Powerline:h13
-
->>>>>>> d4e1fc64932e2b468332fe1e491e5841d9a877bb
-
 
 
 "--------for Syntastic
@@ -269,7 +256,6 @@ let g:syntastic_always_populate_loc_list = 1
 let g:syntastic_check_on_open = 1
 let g:syntastic_check_on_wq = 0
 
-<<<<<<< HEAD
 " Mark syntax errors with :signs
 let g:syntastic_enable_signs=1
 
@@ -290,9 +276,4 @@ let g:syntastic_auto_loc_list=1
 "let g:syntastic_scala_checkers=['scalac', 'scalastyle']
 
 set linespace=2
-=======
-
-"------for js syntax libraries
-let g:used_javascript_libs = 'underscore,jquery,angularjs,angularui,react'
->>>>>>> d4e1fc64932e2b468332fe1e491e5841d9a877bb
 
