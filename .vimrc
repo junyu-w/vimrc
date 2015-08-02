@@ -17,8 +17,6 @@ Plugin 'gmarik/Vundle.vim'
 Plugin 'tpope/vim-fugitive'
 " plugin from http://vim-scripts.org/vim/scripts.html
 Plugin 'L9'
-" Git plugin not hosted on GitHub
-Plugin 'git://git.wincent.com/command-t.git'
 " git repos on your local machine (i.e. when working on your own plugin)
 Plugin 'file:///home/gmarik/path/to/plugin'
 " The sparkup vim script is in a subdirectory of this repo called vim.
@@ -29,15 +27,20 @@ Plugin 'user/L9', {'name': 'newL9'}
 
 Plugin 'The-NERD-tree'
 Bundle 'Lokaltog/powerline', {'rtp': 'powerline/bindings/vim/'}
-"Plugin 'HTML-AutoCloseTag'
-Plugin 'AutoComplPop'
+Plugin 'Valloric/YouCompleteMe'
+Plugin 'amirh/HTML-AutoCloseTag'
 Plugin 'mattn/emmet-vim'
-Plugin 'css-color-preview'
-Plugin 'rails.vim'
 Plugin 'Syntastic'
-Plugin 'rizzatti/dash.vim'
-Plugin 'ryanss/vim-hackernews'
+Plugin 'rails.vim'
 Plugin 'flazz/vim-colorschemes'
+Plugin 'burnettk/vim-angular'
+Plugin 'kchmck/vim-coffee-script'
+Plugin 'kien/ctrlp.vim'
+Plugin 'godlygeek/tabular'
+Plugin 'airblade/vim-gitgutter'
+Plugin 'nathanaelkane/vim-indent-guides'
+Plugin 'terryma/vim-multiple-cursors'
+Plugin 'rking/ag.vim'
 
 " All of your Plugins must be added before the following line
 call vundle#end()            " required
@@ -218,11 +221,12 @@ nnoremap <C-L> :nohl<CR><C-L>
 
 if has('gui_running')
   set background=dark
-  "colorscheme atom-dark
   "colorscheme solarized
-  "colorscheme grb256
+  " this is the atom dark color scheme
+  "colorscheme grb256 
   "colorscheme jellybeans
-  colorscheme Monokai
+  "colorscheme Monokai
+  colorscheme atom
 else
   colorscheme default
 endif
@@ -236,7 +240,8 @@ set t_Co=256
 set fillchars+=stl:\ ,stlnc:\
 set term=xterm-256color
 set termencoding=utf-8
-set guifont=DejaVu\ Sans\ Mono\ for\ Powerline:h12
+set guifont=DejaVu\ Sans\ Mono\ for\ Powerline:h14
+"set guifont=Monaco\ for\ Powerline:h13
 
 
 
@@ -246,6 +251,27 @@ set statusline+=%{SyntasticStatuslineFlag()}
 set statusline+=%*
 
 let g:syntastic_always_populate_loc_list = 1
-let g:syntastic_auto_loc_list = 1
 let g:syntastic_check_on_open = 1
 let g:syntastic_check_on_wq = 0
+
+" Mark syntax errors with :signs
+let g:syntastic_enable_signs=1
+
+" Do not automatically jump to the error when saving the file
+" Jump feature is annoying to me as it automatically moves the cursor
+let g:syntastic_auto_jump=0
+
+" Show the error list automatically
+" Allows you to easily navigate the quick fix list
+let g:syntastic_auto_loc_list=1
+
+" This is where the magic happens. Chain together different style checkers
+" in order to check for both style flaws and syntax errors.
+" Syntax checkers: https://github.com/scrooloose/syntastic/wiki/Syntax-Checkers
+"let g:syntastic_ruby_checkers=['rubocop', 'mri']
+"let g:syntastic_python_checkers=['pep8', 'pylint', 'python']
+"let g:syntastic_javascript_checkers=['jshint']
+"let g:syntastic_scala_checkers=['scalac', 'scalastyle']
+
+set linespace=2
+
