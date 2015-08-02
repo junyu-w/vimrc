@@ -2,9 +2,6 @@
 set nocompatible              " be iMproved, required
 filetype off                  " required
 
-"dealing with fish shell cannot handle Syntastic
-set shell=/bin/bash
-
 " set the runtime path to include Vundle and initialize
 set rtp+=~/.vim/bundle/Vundle.vim
 call vundle#begin()
@@ -21,15 +18,15 @@ Plugin 'tpope/vim-fugitive'
 " plugin from http://vim-scripts.org/vim/scripts.html
 Plugin 'L9'
 " git repos on your local machine (i.e. when working on your own plugin)
-" Plugin 'file:///home/gmarik/path/to/plugin'
+Plugin 'file:///home/gmarik/path/to/plugin'
 " The sparkup vim script is in a subdirectory of this repo called vim.
 " Pass the path to set the runtimepath properly.
 Plugin 'rstacruz/sparkup', {'rtp': 'vim/'}
 " Avoid a name conflict with L9
-" Plugin 'user/L9', {'name': 'newL9'}
+Plugin 'user/L9', {'name': 'newL9'}
 
 Plugin 'The-NERD-tree'
-Bundle 'Lokaltog/powerline', {'rtp': 'powerline/bindings/vim/'}
+Plugin 'bling/vim-airline'
 Plugin 'Valloric/YouCompleteMe'
 Plugin 'amirh/HTML-AutoCloseTag'
 Plugin 'mattn/emmet-vim'
@@ -44,6 +41,10 @@ Plugin 'airblade/vim-gitgutter'
 Plugin 'nathanaelkane/vim-indent-guides'
 Plugin 'terryma/vim-multiple-cursors'
 Plugin 'rking/ag.vim'
+Plugin 'majutsushi/tagbar'
+Plugin 'whatyouhide/vim-gotham'
+Plugin 'bronson/vim-trailing-whitespace'
+Plugin 'easymotion/vim-easymotion'
 
 " All of your Plugins must be added before the following line
 call vundle#end()            " required
@@ -229,12 +230,13 @@ if has('gui_running')
   "colorscheme grb256 
   "colorscheme jellybeans
   "colorscheme Monokai
-  colorscheme atom
+  colorscheme Tomorrow-Night
+  "colorscheme atom
 else
-  colorscheme default
+  colorscheme Monokai
 endif
 " colorscheme solarized
-" set background=dark
+set background=dark
 
 "------------------------------------------------------------
 let g:Powerline_symbols = 'fancy'
@@ -244,7 +246,7 @@ set fillchars+=stl:\ ,stlnc:\
 set term=xterm-256color
 set termencoding=utf-8
 set guifont=DejaVu\ Sans\ Mono\ for\ Powerline:h14
-"set guifont=Monaco\ for\ Powerline:h13
+
 
 
 "--------for Syntastic
@@ -265,7 +267,7 @@ let g:syntastic_auto_jump=0
 
 " Show the error list automatically
 " Allows you to easily navigate the quick fix list
-let g:syntastic_auto_loc_list=1
+let g:syntastic_auto_loc_list=0
 
 " This is where the magic happens. Chain together different style checkers
 " in order to check for both style flaws and syntax errors.
@@ -277,3 +279,21 @@ let g:syntastic_auto_loc_list=1
 
 set linespace=2
 
+" vim-powerline symbols
+let g:airline_theme = 'dark'
+let g:airline#extensions#syntastic#enabled = 1
+
+
+"tagbar related settings
+set tags=./tags;,~/.vimtags
+" Sensible defaults
+let g:tagbar_ctags_bin='/usr/local/bin/ctags'
+let g:easytags_events = ['BufReadPost', 'BufWritePost']
+let g:easytags_async = 1
+let g:easytags_dynamic_files = 2
+let g:easytags_resolve_links = 1
+let g:easytags_suppress_ctags_warning = 1
+
+" Disable the scrollbars
+set guioptions-=r
+set guioptions-=L
