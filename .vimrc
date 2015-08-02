@@ -2,6 +2,9 @@
 set nocompatible              " be iMproved, required
 filetype off                  " required
 
+"dealing with fish shell cannot handle Syntastic
+set shell=/bin/bash
+
 " set the runtime path to include Vundle and initialize
 set rtp+=~/.vim/bundle/Vundle.vim
 call vundle#begin()
@@ -18,12 +21,12 @@ Plugin 'tpope/vim-fugitive'
 " plugin from http://vim-scripts.org/vim/scripts.html
 Plugin 'L9'
 " git repos on your local machine (i.e. when working on your own plugin)
-Plugin 'file:///home/gmarik/path/to/plugin'
+" Plugin 'file:///home/gmarik/path/to/plugin'
 " The sparkup vim script is in a subdirectory of this repo called vim.
 " Pass the path to set the runtimepath properly.
 Plugin 'rstacruz/sparkup', {'rtp': 'vim/'}
 " Avoid a name conflict with L9
-Plugin 'user/L9', {'name': 'newL9'}
+" Plugin 'user/L9', {'name': 'newL9'}
 
 Plugin 'The-NERD-tree'
 Bundle 'Lokaltog/powerline', {'rtp': 'powerline/bindings/vim/'}
@@ -222,11 +225,17 @@ nnoremap <C-L> :nohl<CR><C-L>
 if has('gui_running')
   set background=dark
   "colorscheme solarized
+<<<<<<< HEAD
   " this is the atom dark color scheme
   "colorscheme grb256 
   "colorscheme jellybeans
   "colorscheme Monokai
   colorscheme atom
+=======
+  "colorscheme grb256
+  colorscheme jellybeans
+  "colorscheme Monokai
+>>>>>>> d4e1fc64932e2b468332fe1e491e5841d9a877bb
 else
   colorscheme default
 endif
@@ -240,8 +249,14 @@ set t_Co=256
 set fillchars+=stl:\ ,stlnc:\
 set term=xterm-256color
 set termencoding=utf-8
+<<<<<<< HEAD
 set guifont=DejaVu\ Sans\ Mono\ for\ Powerline:h14
 "set guifont=Monaco\ for\ Powerline:h13
+=======
+"set guifont=DejaVu\ Sans\ Mono\ for\ Powerline:h13
+set guifont=Monaco\ for\ Powerline:h13
+
+>>>>>>> d4e1fc64932e2b468332fe1e491e5841d9a877bb
 
 
 
@@ -254,6 +269,7 @@ let g:syntastic_always_populate_loc_list = 1
 let g:syntastic_check_on_open = 1
 let g:syntastic_check_on_wq = 0
 
+<<<<<<< HEAD
 " Mark syntax errors with :signs
 let g:syntastic_enable_signs=1
 
@@ -274,4 +290,9 @@ let g:syntastic_auto_loc_list=1
 "let g:syntastic_scala_checkers=['scalac', 'scalastyle']
 
 set linespace=2
+=======
+
+"------for js syntax libraries
+let g:used_javascript_libs = 'underscore,jquery,angularjs,angularui,react'
+>>>>>>> d4e1fc64932e2b468332fe1e491e5841d9a877bb
 
