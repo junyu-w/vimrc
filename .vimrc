@@ -45,6 +45,7 @@ Plugin 'majutsushi/tagbar'
 Plugin 'whatyouhide/vim-gotham'
 Plugin 'bronson/vim-trailing-whitespace'
 Plugin 'easymotion/vim-easymotion'
+Plugin 'groovy.vim'
 
 " All of your Plugins must be added before the following line
 call vundle#end()            " required
@@ -223,15 +224,18 @@ map Y y$
 " next search
 nnoremap <C-L> :nohl<CR><C-L>
 
+" Set ruby path to enhance vim speed
+let g:ruby_path = system('rvm current')
+
 if has('gui_running')
   set background=dark
-  "colorscheme solarized
+  " colorscheme solarized
   " this is the atom dark color scheme
-  "colorscheme grb256 
-  "colorscheme jellybeans
-  "colorscheme Monokai
+  " colorscheme grb256 
+  " colorscheme jellybeans
+  " colorscheme Monokai
   colorscheme Tomorrow-Night
-  "colorscheme atom
+  " colorscheme atom
 else
   colorscheme Monokai
 endif
@@ -283,7 +287,6 @@ set linespace=2
 let g:airline_theme = 'dark'
 let g:airline#extensions#syntastic#enabled = 1
 
-
 "tagbar related settings
 set tags=./tags;,~/.vimtags
 " Sensible defaults
@@ -297,3 +300,16 @@ let g:easytags_suppress_ctags_warning = 1
 " Disable the scrollbars
 set guioptions-=r
 set guioptions-=L
+
+" easiy navigate between panes
+nnoremap <C-J> <C-W><C-J>
+nnoremap <C-K> <C-W><C-K>
+nnoremap <C-L> <C-W><C-L>
+nnoremap <C-H> <C-W><C-H>
+
+set splitbelow
+set splitright
+
+" Ag key mapping
+nnoremap <leader>a :Ag!
+
