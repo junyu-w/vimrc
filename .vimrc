@@ -33,6 +33,7 @@ Plugin 'whatyouhide/vim-gotham'
 Plugin 'bronson/vim-trailing-whitespace'
 Plugin 'groovy.vim'
 Plugin 'yonchu/accelerated-smooth-scroll'
+Plugin 'ap/vim-css-color'
 
 " All of your Plugins must be added before the following line
 call vundle#end()            " required
@@ -166,5 +167,4 @@ nnoremap <C-J> <C-W><C-J>
 nnoremap <C-K> <C-W><C-K>
 nnoremap <C-L> <C-W><C-L>
 nnoremap <C-H> <C-W><C-H>
-" disable highlight with c-h
-nnoremap <C-H> :nohl<CR>
+
