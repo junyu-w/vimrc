@@ -34,6 +34,7 @@ Plugin 'bronson/vim-trailing-whitespace'
 Plugin 'groovy.vim'
 Plugin 'yonchu/accelerated-smooth-scroll'
 Plugin 'ap/vim-css-color'
+Plugin 'sjl/gundo.vim'
 
 " All of your Plugins must be added before the following line
 call vundle#end()            " required
@@ -167,4 +168,5 @@ nnoremap <C-J> <C-W><C-J>
 nnoremap <C-K> <C-W><C-K>
 nnoremap <C-L> <C-W><C-L>
 nnoremap <C-H> <C-W><C-H>
-
+" Gundo
+nnoremap <leader>g :GundoToggle<CR>
