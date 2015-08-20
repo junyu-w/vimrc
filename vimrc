@@ -1,5 +1,3 @@
-" TEST
-"
 " Vundle
 set nocompatible              " be iMproved, required
 filetype off                  " required
@@ -22,7 +20,6 @@ Plugin 'mattn/emmet-vim'
 Plugin 'Syntastic'
 Plugin 'rails.vim'
 Plugin 'flazz/vim-colorschemes'
-Plugin 'burnettk/vim-angular'
 Plugin 'kchmck/vim-coffee-script'
 Plugin 'kien/ctrlp.vim'
 Plugin 'godlygeek/tabular'
@@ -43,9 +40,22 @@ call vundle#end()            " required
 filetype plugin indent on    " required
 
 set nocompatible
-filetype indent plugin on
-syntax on
 
+" Filetype detection, plugins, indent, syntax {{{1
+if has('autocmd')
+  filetype plugin indent on	  " Turn on Filetype detection, plugins, and
+                              " indent
+endif
+
+if has('syntax') && !exists('g:syntax_on')
+  syntax enable			" Turn on syntax highlighting
+endif
+
+" Builtin plugins {{{1
+" Load matchit.vim, but only if the user hasn't installed a newer version.
+if !exists('g:loaded_matchit') && findfile('plugin/matchit.vim', &rtp) ==# ''
+  runtime! macros/matchit.vim
+endif
 
 "------------------------------------------------------------
 " Must have options {{{1
@@ -73,10 +83,16 @@ set pastetoggle=<F11>
 set shiftwidth=2
 set softtabstop=2
 set expandtab
-set guifont=Menlo:h12
+set guifont=DejaVu\ Sans\ Mono\ for\ Powerline:h12
+set background=dark
 
-" Indentation settings for using hard tabs for indent. Display tabs as
-" two characters wide.
+set incsearch
+set scrolloff=3
+set ttyfast
+set clipboard=unnamed
+set linebreak
+set showbreak=↪\ \
+
 "set shiftwidth=2
 "set tabstop=2
 
@@ -87,14 +103,7 @@ map Y y$
 let g:ruby_path = system('rvm current')
 
 if has('gui_running')
-  set background=dark
-  " colorscheme solarized
-  " this is the atom dark color scheme
   colorscheme grb256
-  " colorscheme jellybeans
-  " colorscheme molokai
-  " colorscheme Tomorrow-Night
-  " colorscheme atom
 else
   colorscheme Monokai
 endif
@@ -123,20 +132,6 @@ if !exists('g:airline_symbols')
   let g:airline_symbols = {}
 endif
 
-" unicode symbols
-let g:airline_left_sep           = '»'
-let g:airline_left_sep           = '▶'
-let g:airline_right_sep          = '«'
-let g:airline_right_sep          = '◀'
-let g:airline_symbols.linenr     = '␊'
-let g:airline_symbols.linenr     = '␤'
-let g:airline_symbols.linenr     = '¶'
-let g:airline_symbols.branch     = '⎇'
-let g:airline_symbols.paste      = 'ρ'
-let g:airline_symbols.paste      = 'Þ'
-let g:airline_symbols.paste      = '∥'
-let g:airline_symbols.whitespace = 'Ξ'
-
 " --------------------- tagbar related settings -------------------
 set tags=./tags;,~/.vimtags
 " Sensible defaults
@@ -158,7 +153,7 @@ let mapleader = ","
 
 " Map <C-L> (redraw screen) to also turn off search highlighting until the
 " next search
-nnoremap <C-L> :nohl<CR><C-L>
+nnoremap <C-Z> :nohl<CR><C-L>
 " Ag key mapping
 nnoremap <leader>a :Ag!
 " Tagbar
@@ -172,3 +167,13 @@ nnoremap <C-L> <C-W><C-L>
 nnoremap <C-H> <C-W><C-H>
 " Gundo
 nnoremap <leader>g :GundoToggle<CR>
+
+
+" When editing a file, always jump to the last known cursor position.
+" Don't do it for commit messages, when the position is invalid, or when
+" inside an event handler (happens when dropping a file on gvim).
+" From https://github.com/thoughtbot/dotfiles/blob/master/vimrc
+autocmd BufReadPost *
+  \ if &ft != 'gitcommit' && line("'\"") > 0 && line("'\"") <= line("$") |
+  \   exe "normal g`\"" |
+  \ endif
