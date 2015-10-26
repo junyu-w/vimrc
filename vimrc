@@ -13,9 +13,10 @@ Plugin 'tpope/vim-fugitive'
 Plugin 'L9'
 Plugin 'rstacruz/sparkup', {'rtp': 'vim/'}
 Plugin 'The-NERD-tree'
+Plugin 'jistr/vim-nerdtree-tabs'
 Plugin 'bling/vim-airline'
-Plugin 'Valloric/YouCompleteMe'
 Plugin 'amirh/HTML-AutoCloseTag'
+Plugin 'Shougo/neocomplete.vim'
 Plugin 'mattn/emmet-vim'
 Plugin 'Syntastic'
 Plugin 'rails.vim'
@@ -85,6 +86,7 @@ set softtabstop=2
 set expandtab
 set guifont=DejaVu\ Sans\ Mono\ for\ Powerline:h12
 set background=dark
+set cursorline
 
 set incsearch
 set scrolloff=3
@@ -92,10 +94,11 @@ set ttyfast
 set clipboard=unnamed
 set linebreak
 set showbreak=↪\ \
+" set a 80 char vertical line
+set colorcolumn=80
 
 "set shiftwidth=2
 "set tabstop=2
-
 map Y y$
 
 " ---------------- CUSTOMIZED SETTINGS --------------------------
@@ -103,12 +106,10 @@ map Y y$
 let g:ruby_path = system('rvm current')
 
 if has('gui_running')
-  colorscheme grb256
+  colorscheme codeschool
 else
-  colorscheme Monokai
+  colorscheme molokai
 endif
-" colorscheme solarized
-set background=dark
 
 
 "--------for Syntastic--------------------------------------------
@@ -151,6 +152,7 @@ set splitright
 " -------------------- Map leader key -----------------------
 let mapleader = ","
 
+nnoremap ; :
 " Map <C-L> (redraw screen) to also turn off search highlighting until the
 " next search
 nnoremap <C-Z> :nohl<CR><C-L>
@@ -159,7 +161,7 @@ nnoremap <leader>a :Ag!
 " Tagbar
 nnoremap <leader>t :TagbarToggle<CR>
 "NERD-TREE
-nnoremap <leader>n :NERDTreeToggle<CR>
+nnoremap <leader>n :NERDTreeTabsToggle<CR>
 " easiy navigate between panes
 nnoremap <C-J> <C-W><C-J>
 nnoremap <C-K> <C-W><C-K>
@@ -177,3 +179,59 @@ autocmd BufReadPost *
   \ if &ft != 'gitcommit' && line("'\"") > 0 && line("'\"") <= line("$") |
   \   exe "normal g`\"" |
   \ endif
+
+"--------------neocomplete---------------
+
+" neocomplete {{{
+let g:neocomplete#data_directory = '~/.vim/tmp/neocomplete'
+let g:neocomplete#enable_at_startup = 1
+let g:neocomplete#enable_auto_select = 1
+let g:neocomplete#enable_smart_case = 1
+let g:neocomplete#auto_completion_start_length = 2
+
+" increase limit for tag cache files
+let g:neocomplete#sources#tags#cache_limit_size = 16777216 " 16MB
+
+" fuzzy completion breaks dot-repeat more noticeably
+" https://github.com/Shougo/neocomplete.vim/issues/332
+let g:neocomplete#enable_fuzzy_completion = 0
+
+" always use completions from all buffers
+if !exists('g:neocomplete#same_filetypes')
+  let g:neocomplete#same_filetypes = {}
+endif
+let g:neocomplete#same_filetypes._ = '_'
+
+" enable omni-completion for Ruby and PHP
+call neocomplete#util#set_default_dictionary(
+      \'g:neocomplete#sources#omni#input_patterns', 'ruby',
+      \'[^. *\t]\.\h\w*\|\h\w*::\w*')
+call neocomplete#util#set_default_dictionary(
+      \'g:neocomplete#sources#omni#input_patterns',
+      \'php',
+      \'[^. \t]->\h\w*\|\h\w*::\w*')
+
+" disable for Python
+call neocomplete#util#set_default_dictionary(
+      \'g:neocomplete#sources#omni#input_patterns',
+      \'python',
+      \'')
+
+" from neocomplete.txt:
+" ---------------------
+
+" Plugin key-mappings.
+inoremap <expr> <C-g> neocomplete#undo_completion()
+inoremap <expr> <C-l> neocomplete#complete_common_string()
+
+" Recommended key-mappings.
+" <CR>: cancel popup and insert newline.
+inoremap <silent> <CR> <C-r>=neocomplete#smart_close_popup()<CR><CR>
+" <TAB>: completion.
+inoremap <expr> <Tab> pumvisible() ? "\<C-y>" : "\<Tab>"
+" <C-h>, <BS>: close popup and delete backword char.
+inoremap <expr> <C-h> neocomplete#smart_close_popup()."\<C-h>"
+inoremap <expr> <BS>  neocomplete#smart_close_popup()."\<C-h>"
+inoremap <expr> <C-y> neocomplete#close_popup()
+inoremap <expr> <C-e> neocomplete#cancel_popup()
+" }}}
