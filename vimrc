@@ -28,7 +28,6 @@ Plugin 'majutsushi/tagbar'
 Plugin 'whatyouhide/vim-gotham'
 Plugin 'bronson/vim-trailing-whitespace'
 Plugin 'groovy.vim'
-Plugin 'yonchu/accelerated-smooth-scroll'
 Plugin 'ap/vim-css-color'
 if has('nvim')
   Plugin 'ervandew/supertab'
