@@ -13,20 +13,16 @@ Plugin 'tpope/vim-fugitive'
 Plugin 'L9'
 Plugin 'rstacruz/sparkup', {'rtp': 'vim/'}
 Plugin 'The-NERD-tree'
-Plugin 'jistr/vim-nerdtree-tabs'
 Plugin 'bling/vim-airline'
-Plugin 'amirh/HTML-AutoCloseTag'
 Plugin 'Shougo/neocomplete.vim'
 Plugin 'mattn/emmet-vim'
 Plugin 'Syntastic'
 Plugin 'rails.vim'
-Plugin 'flazz/vim-colorschemes'
 Plugin 'kchmck/vim-coffee-script'
 Plugin 'kien/ctrlp.vim'
 Plugin 'godlygeek/tabular'
 Plugin 'airblade/vim-gitgutter'
 Plugin 'nathanaelkane/vim-indent-guides'
-Plugin 'terryma/vim-multiple-cursors'
 Plugin 'rking/ag.vim'
 Plugin 'majutsushi/tagbar'
 Plugin 'whatyouhide/vim-gotham'
@@ -34,18 +30,19 @@ Plugin 'bronson/vim-trailing-whitespace'
 Plugin 'groovy.vim'
 Plugin 'yonchu/accelerated-smooth-scroll'
 Plugin 'ap/vim-css-color'
-Plugin 'sjl/gundo.vim'
+if has('nvim')
+  Plugin 'ervandew/supertab'
+endif
+Plugin 'Shougo/vimproc.vim'
+Plugin 'flazz/vim-colorschemes'
 
 " All of your Plugins must be added before the following line
 call vundle#end()            " required
-filetype plugin indent on    " required
 
 set nocompatible
-
 " Filetype detection, plugins, indent, syntax {{{1
 if has('autocmd')
-  filetype plugin indent on	  " Turn on Filetype detection, plugins, and
-                              " indent
+  filetype plugin indent on	  " Turn on Filetype detection, plugins, and indent
 endif
 
 if has('syntax') && !exists('g:syntax_on')
@@ -87,7 +84,6 @@ set expandtab
 set guifont=DejaVu\ Sans\ Mono\ for\ Powerline:h12
 set background=dark
 set cursorline
-
 set incsearch
 set scrolloff=3
 set ttyfast
@@ -96,6 +92,8 @@ set linebreak
 set showbreak=↪\ \
 " set a 80 char vertical line
 set colorcolumn=80
+set nobackup
+set noswapfile
 
 "set shiftwidth=2
 "set tabstop=2
@@ -108,7 +106,7 @@ let g:ruby_path = system('rvm current')
 if has('gui_running')
   colorscheme codeschool
 else
-  colorscheme molokai
+  colorscheme monokai
 endif
 
 
@@ -161,14 +159,19 @@ nnoremap <leader>a :Ag!
 " Tagbar
 nnoremap <leader>t :TagbarToggle<CR>
 "NERD-TREE
-nnoremap <leader>n :NERDTreeTabsToggle<CR>
+nnoremap <leader>n :NERDTreeToggle<CR>
 " easiy navigate between panes
 nnoremap <C-J> <C-W><C-J>
 nnoremap <C-K> <C-W><C-K>
 nnoremap <C-L> <C-W><C-L>
 nnoremap <C-H> <C-W><C-H>
-" Gundo
-nnoremap <leader>g :GundoToggle<CR>
+
+
+" Tabs (navigation)
+nnoremap tt         :tabm 
+nnoremap tl         gt
+nnoremap th         gT
+nnoremap td         :tabclose<CR>
 
 
 " When editing a file, always jump to the last known cursor position.
@@ -211,15 +214,8 @@ call neocomplete#util#set_default_dictionary(
       \'php',
       \'[^. \t]->\h\w*\|\h\w*::\w*')
 
-" disable for Python
-call neocomplete#util#set_default_dictionary(
-      \'g:neocomplete#sources#omni#input_patterns',
-      \'python',
-      \'')
-
 " from neocomplete.txt:
 " ---------------------
-
 " Plugin key-mappings.
 inoremap <expr> <C-g> neocomplete#undo_completion()
 inoremap <expr> <C-l> neocomplete#complete_common_string()
