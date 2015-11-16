@@ -32,8 +32,9 @@ Plugin 'Shougo/vimproc.vim'
 Plugin 'flazz/vim-colorschemes'
 Plugin 'pangloss/vim-javascript'
 Plugin 'mxw/vim-jsx'
-Plugin 'honza/vim-snippets'
+Plugin 'Shougo/neosnippet-snippets'
 Plugin 'Shougo/neosnippet'
+Plugin 'honza/vim-snippets'
 
 " All of your Plugins must be added before the following line
 call vundle#end()            " required
@@ -86,7 +87,6 @@ set linebreak
 set colorcolumn=80
 set nobackup
 set noswapfile
-" only syntax heighlight code among first 120 columns
 set synmaxcol=0
 set linespace=2
 set novisualbell
@@ -142,8 +142,8 @@ set guioptions-=l
 set guioptions-=L
 set guioptions-=b
 set guioptions+=c
-"set guifont=Ubuntu\ Mono\ 13,Menlo\ Regular:h12
-set guifont=DejaVu\ Sans\ Mono\ for\ Powerline:h12
+set guifont=Ubuntu\ Mono\ 13,Menlo\ Regular:h12
+" set guifont=DejaVu\ Sans\ Mono\ for\ Powerline:h12
 set splitbelow
 set splitright
 
@@ -306,10 +306,11 @@ if has('autocmd')
   autocmd Filetype javascript setlocal ts=4 sts=4 sw=4 noet
   autocmd Filetype python setlocal ts=4 sts=4 sw=4
 
-  " Support for go
   autocmd BufNewFile,BufRead *.go set filetype=go
-  " Support for markdown
   autocmd BufNewFile,BufRead *.md set filetype=markdown
+  " make js snippets available in html, and html.erb
+  autocmd BufNewFile,BufRead *.html set filetype=html.javascript
+  autocmd BufNewFile,BufRead *.html.erb set filetype=html.javascript.eruby
 endif
 
 syntax on
