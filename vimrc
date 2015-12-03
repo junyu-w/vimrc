@@ -35,6 +35,8 @@ Plugin 'mxw/vim-jsx'
 Plugin 'Shougo/neosnippet-snippets'
 Plugin 'Shougo/neosnippet'
 Plugin 'honza/vim-snippets'
+Plugin 'vim-ruby/vim-ruby'
+Plugin 'slim-template/vim-slim'
 
 " All of your Plugins must be added before the following line
 call vundle#end()            " required
@@ -87,7 +89,7 @@ set linebreak
 set colorcolumn=80
 set nobackup
 set noswapfile
-set synmaxcol=0
+set synmaxcol=120
 set linespace=2
 set novisualbell
 set tabpagemax=50
@@ -149,6 +151,7 @@ set splitright
 
 " -------------------- key mappings-----------------------
 let mapleader = ","
+imap jj <Esc>
 
 nnoremap ; :
 " Map <C-L> (redraw screen) to also turn off search highlighting until the
@@ -301,18 +304,14 @@ if has('autocmd')
     \ if &ft != 'gitcommit' && line("'\"") > 0 && line("'\"") <= line("$") |
     \   exe "normal g`\"" |
     \ endif
-  " indentation for different file types
-  autocmd Filetype ruby setlocal ts=2 sts=2 sw=2 et
-  autocmd Filetype javascript setlocal ts=4 sts=4 sw=4 noet
-  autocmd Filetype python setlocal ts=4 sts=4 sw=4
 
   autocmd BufNewFile,BufRead *.go set filetype=go
   autocmd BufNewFile,BufRead *.md set filetype=markdown
   " make js snippets available in html, and html.erb
   autocmd BufNewFile,BufRead *.html set filetype=html.javascript
   autocmd BufNewFile,BufRead *.html.erb set filetype=html.javascript.eruby
+  autocmd BufNewFile,BufRead *.slim set filetype=slim
 endif
 
 syntax on
-" colorscheme solarized
 set background=dark
