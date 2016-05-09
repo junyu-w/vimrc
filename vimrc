@@ -25,18 +25,13 @@ Plugin 'rking/ag.vim'
 Plugin 'majutsushi/tagbar'
 Plugin 'whatyouhide/vim-gotham'
 Plugin 'ap/vim-css-color'
-if has('nvim')
-  Plugin 'ervandew/supertab'
-endif
-Plugin 'Shougo/vimproc.vim'
 Plugin 'flazz/vim-colorschemes'
 Plugin 'pangloss/vim-javascript'
 Plugin 'mxw/vim-jsx'
-Plugin 'Shougo/neosnippet-snippets'
-Plugin 'Shougo/neosnippet'
 Plugin 'honza/vim-snippets'
 Plugin 'vim-ruby/vim-ruby'
 Plugin 'slim-template/vim-slim'
+Plugin 'tpope/vim-surround'
 
 " All of your Plugins must be added before the following line
 call vundle#end()            " required
@@ -78,15 +73,13 @@ set pastetoggle=<F11>
 set shiftwidth=2
 set softtabstop=2
 set expandtab
-set cursorline
+" set cursorline
 set incsearch
 set scrolloff=2
 set ttyfast
 set clipboard=unnamed
-set linebreak
-" set showbreak=↪\ \
 " set a 80 char vertical line
-set colorcolumn=80
+" set colorcolumn=80
 set nobackup
 set noswapfile
 set synmaxcol=120
@@ -95,13 +88,12 @@ set novisualbell
 set tabpagemax=50
 
 map Y y$
-
 " ---------------- CUSTOMIZED SETTINGS --------------------------
 
 if has('gui_running')
-  colorscheme molokai
+  colorscheme Tomorrow-Night
 else
-  colorscheme railscasts
+  colorscheme default
 endif
 
 
@@ -144,14 +136,13 @@ set guioptions-=l
 set guioptions-=L
 set guioptions-=b
 set guioptions+=c
-set guifont=Ubuntu\ Mono\ 13,Menlo\ Regular:h12
+set guifont=Ubuntu\ Mono\ 13,Menlo\ Regular:h14
 " set guifont=DejaVu\ Sans\ Mono\ for\ Powerline:h12
 set splitbelow
 set splitright
 
 " -------------------- key mappings-----------------------
 let mapleader = ","
-imap jj <Esc>
 
 nnoremap ; :
 " Map <C-L> (redraw screen) to also turn off search highlighting until the
@@ -163,7 +154,7 @@ nnoremap <C-K> <C-W><C-K>
 nnoremap <C-L> <C-W><C-L>
 nnoremap <C-H> <C-W><C-H>
 " Tabs (navigation)
-nnoremap tl :tabNext<CR>
+nnoremap tl :tabnext<CR>
 nnoremap th :tabprevious<CR>
 nnoremap td :tabclose<CR>
 " Go to tab by number
@@ -238,6 +229,7 @@ imap <C-k>     <Plug>(neosnippet_expand_or_jump)
 smap <C-k>     <Plug>(neosnippet_expand_or_jump)
 xmap <C-k>     <Plug>(neosnippet_expand_target)
 
+
 " Tell Neosnippet about the other snippets
 let g:neosnippet#snippets_directory='~/.vim/bundle/vim-snippets/snippets'
 
@@ -253,17 +245,20 @@ let g:jsx_ext_required = 0
 
 " neocomplete {{{
 let g:neocomplete#data_directory = '~/.vim/tmp/neocomplete'
+" Use neocomplete.
 let g:neocomplete#enable_at_startup = 1
-let g:neocomplete#enable_auto_select = 1
+" Use smartcase.
 let g:neocomplete#enable_smart_case = 1
-let g:neocomplete#auto_completion_start_length = 2
+" Set minimum syntax keyword length.
+let g:neocomplete#sources#syntax#min_keyword_length = 3
+let g:neocomplete#lock_buffer_name_pattern = '\*ku\*'
 
 " increase limit for tag cache files
 let g:neocomplete#sources#tags#cache_limit_size = 16777216 " 16MB
 
 " fuzzy completion breaks dot-repeat more noticeably
 " https://github.com/Shougo/neocomplete.vim/issues/332
-let g:neocomplete#enable_fuzzy_completion = 0
+let g:neocomplete#enable_fuzzy_completion = 1
 
 " always use completions from all buffers
 if !exists('g:neocomplete#same_filetypes')
@@ -271,23 +266,16 @@ if !exists('g:neocomplete#same_filetypes')
 endif
 let g:neocomplete#same_filetypes._ = '_'
 
-" enable omni-completion for Ruby
-call neocomplete#util#set_default_dictionary(
-      \'g:neocomplete#sources#omni#input_patterns', 'ruby',
-      \'[^. *\t]\.\h\w*\|\h\w*::\w*')
-
-" from neocomplete.txt:
-" ---------------------
-" Plugin key-mappings.
-inoremap <expr> <C-g> neocomplete#undo_completion()
-inoremap <expr> <C-l> neocomplete#complete_common_string()
-
 " Recommended key-mappings.
-" <CR>: cancel popup and insert newline.
-inoremap <silent> <CR> <C-r>=neocomplete#smart_close_popup()<CR><CR>
+" <CR>: close popup and save indent.
+inoremap <silent> <CR> <C-r>=<SID>my_cr_function()<CR>
+function! s:my_cr_function()
+  return (pumvisible() ? "\<C-y>" : "" ) . "\<CR>"
+  " For no inserting <CR> key.
+  "return pumvisible() ? "\<C-y>" : "\<CR>"
+endfunction
 " <TAB>: completion.
-inoremap <expr> <Tab> pumvisible() ? "\<C-y>" : "\<Tab>"
-
+inoremap <expr><TAB>  pumvisible() ? "\<C-n>" : "\<TAB>"
 
 
 "-------------------AUTOCMD ----------------------------
@@ -308,8 +296,8 @@ if has('autocmd')
   autocmd BufNewFile,BufRead *.go set filetype=go
   autocmd BufNewFile,BufRead *.md set filetype=markdown
   " make js snippets available in html, and html.erb
-  autocmd BufNewFile,BufRead *.html set filetype=html.javascript
-  autocmd BufNewFile,BufRead *.html.erb set filetype=html.javascript.eruby
+  autocmd BufNewFile,BufRead *.html set filetype=html.javascript.jsx
+  autocmd BufNewFile,BufRead *.html.erb set filetype=html.eruby
   autocmd BufNewFile,BufRead *.slim set filetype=slim
 endif
 
