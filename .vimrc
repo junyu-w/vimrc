@@ -10,28 +10,15 @@ call vundle#begin()
 
 Plugin 'gmarik/Vundle.vim'
 Plugin 'tpope/vim-fugitive'
-Plugin 'L9'
 Plugin 'The-NERD-tree'
 Plugin 'bling/vim-airline'
-Plugin 'Shougo/neocomplete.vim'
-Plugin 'mattn/emmet-vim'
 Plugin 'Syntastic'
-Plugin 'rails.vim'
-Plugin 'kchmck/vim-coffee-script'
-Plugin 'kien/ctrlp.vim'
-Plugin 'godlygeek/tabular'
 Plugin 'airblade/vim-gitgutter'
-Plugin 'rking/ag.vim'
 Plugin 'majutsushi/tagbar'
-Plugin 'whatyouhide/vim-gotham'
-Plugin 'ap/vim-css-color'
 Plugin 'flazz/vim-colorschemes'
-Plugin 'pangloss/vim-javascript'
-Plugin 'mxw/vim-jsx'
-Plugin 'honza/vim-snippets'
-Plugin 'vim-ruby/vim-ruby'
-Plugin 'slim-template/vim-slim'
-Plugin 'tpope/vim-surround'
+Plugin 'junegunn/fzf', { 'do': { -> fzf#install() } }
+Plugin 'junegunn/fzf.vim'
+Plugin 'rust-lang/rust.vim'
 
 " All of your Plugins must be added before the following line
 call vundle#end()            " required
@@ -86,6 +73,19 @@ set synmaxcol=120
 set linespace=2
 set novisualbell
 set tabpagemax=50
+syntax on
+set background=dark
+
+inoremap { {}<Esc>ha
+inoremap ( ()<Esc>ha
+inoremap [ []<Esc>ha
+inoremap " ""<Esc>ha
+inoremap ' ''<Esc>ha
+inoremap ` ``<Esc>ha
+
+" ------------------- Some python options ----------------
+set encoding=utf-8
+
 
 map Y y$
 " ---------------- CUSTOMIZED SETTINGS --------------------------
@@ -93,7 +93,7 @@ map Y y$
 if has('gui_running')
   colorscheme Tomorrow-Night
 else
-  colorscheme default
+  colorscheme neodark
 endif
 
 
@@ -118,9 +118,10 @@ if !exists('g:airline_symbols')
 endif
 
 " --------------------- tagbar related settings -------------------
+nnoremap <leader>t :TagbarToggle<CR>
 set tags=./tags;,~/.vimtags
 " Sensible defaults
-let g:tagbar_ctags_bin='/usr/local/bin/ctags'
+let g:tagbar_ctags_bin='/opt/homebrew/bin/ctags'
 let g:easytags_events = ['BufReadPost', 'BufWritePost']
 let g:easytags_async = 1
 let g:easytags_dynamic_files = 2
@@ -168,12 +169,13 @@ noremap <leader>7 7gt
 noremap <leader>8 8gt
 noremap <leader>9 9gt
 noremap <leader>0 :tablast<cr>
+" Enable code folding
+set foldmethod=indent
+set foldlevel=99
+" Enable folding with the spacebar
+nnoremap <space> za
 
-"---------------------------------Ag-------------------------------------
-nnoremap <leader>a :Ag!
 
-"---------------------------------Tagbar--------------------------------
-nnoremap <leader>t :TagbarToggle<CR>
 
 " -------------------------------- NERD-TREE -----------------------------
 nnoremap <leader>n :NERDTreeToggle<CR>
@@ -190,92 +192,6 @@ let NERDTreeIgnore = [
   \ '\.output$',
   \ '\.pdf$'
   \ ]
-
-" -------------------------------------------CtrlP------------------------------
-nnoremap <leader>ff :CtrlP<CR>
-nnoremap <leader>fb :CtrlPBuffer<CR>
-
-set wildignore+=*/tmp/*,*.so,*.swp,*.zip    " MacOSX/Linux
-let g:ctrlp_custom_ignore = {
-  \ 'dir':  '\v[\/]\.(git|hg|svn|atom)$',
-  \ 'file': '\v\.(exe|so|dll)$',
-  \ 'link': 'some_bad_symbolic_links',
-  \ }
-
-if executable("ag")
-  let g:ctrlp_user_command = 'ag %s -i --nocolor --nogroup --hidden
-        \ --ignore ".git"
-        \ --ignore ".svn"
-        \ --ignore ".hg"
-        \ --ignore ".bundle"
-        \ --ignore ".DS_Store"
-        \ --ignore "*.pyc"
-        \ --ignore "*.exe"
-        \ --ignore "*.so"
-        \ --ignore "*.dll"
-        \ --ignore "*.class"
-        \ --ignore "*.aux"
-        \ --ignore "*.log"
-        \ --ignore "*.result"
-        \ --ignore "*.output"
-        \ --ignore "*.pdf"
-        \ -g ""'
-endif
-
-
-" ---------------- neosnippet --------------------
-" Plugin key-mappings.
-imap <C-k>     <Plug>(neosnippet_expand_or_jump)
-smap <C-k>     <Plug>(neosnippet_expand_or_jump)
-xmap <C-k>     <Plug>(neosnippet_expand_target)
-
-
-" Tell Neosnippet about the other snippets
-let g:neosnippet#snippets_directory='~/.vim/bundle/vim-snippets/snippets'
-
-" For conceal markers.
-if has('conceal')
-  set conceallevel=2 concealcursor=niv
-endif
-
-" ------------------ jsx ----------------------
-let g:jsx_ext_required = 0
-
-"--------------neocomplete---------------
-
-" neocomplete {{{
-let g:neocomplete#data_directory = '~/.vim/tmp/neocomplete'
-" Use neocomplete.
-let g:neocomplete#enable_at_startup = 1
-" Use smartcase.
-let g:neocomplete#enable_smart_case = 1
-" Set minimum syntax keyword length.
-let g:neocomplete#sources#syntax#min_keyword_length = 3
-let g:neocomplete#lock_buffer_name_pattern = '\*ku\*'
-
-" increase limit for tag cache files
-let g:neocomplete#sources#tags#cache_limit_size = 16777216 " 16MB
-
-" fuzzy completion breaks dot-repeat more noticeably
-" https://github.com/Shougo/neocomplete.vim/issues/332
-let g:neocomplete#enable_fuzzy_completion = 1
-
-" always use completions from all buffers
-if !exists('g:neocomplete#same_filetypes')
-  let g:neocomplete#same_filetypes = {}
-endif
-let g:neocomplete#same_filetypes._ = '_'
-
-" Recommended key-mappings.
-" <CR>: close popup and save indent.
-inoremap <silent> <CR> <C-r>=<SID>my_cr_function()<CR>
-function! s:my_cr_function()
-  return (pumvisible() ? "\<C-y>" : "" ) . "\<CR>"
-  " For no inserting <CR> key.
-  "return pumvisible() ? "\<C-y>" : "\<CR>"
-endfunction
-" <TAB>: completion.
-inoremap <expr><TAB>  pumvisible() ? "\<C-n>" : "\<TAB>"
 
 
 "-------------------AUTOCMD ----------------------------
@@ -301,5 +217,9 @@ if has('autocmd')
   autocmd BufNewFile,BufRead *.slim set filetype=slim
 endif
 
-syntax on
-set background=dark
+
+" ----------------- FZF -----------------------------------------
+nnoremap <S-T> :Files<CR>
+nnoremap <S-F> :Rg<CR>
+
+
