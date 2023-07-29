@@ -19,6 +19,8 @@ Plugin 'flazz/vim-colorschemes'
 Plugin 'junegunn/fzf', { 'do': { -> fzf#install() } }
 Plugin 'junegunn/fzf.vim'
 Plugin 'rust-lang/rust.vim'
+Plugin 'jiangmiao/auto-pairs'
+Plugin 'ycm-core/YouCompleteMe'
 
 " All of your Plugins must be added before the following line
 call vundle#end()            " required
@@ -76,12 +78,6 @@ set tabpagemax=50
 syntax on
 set background=dark
 
-inoremap { {}<Esc>ha
-inoremap ( ()<Esc>ha
-inoremap [ []<Esc>ha
-inoremap " ""<Esc>ha
-inoremap ' ''<Esc>ha
-inoremap ` ``<Esc>ha
 
 " ------------------- Some python options ----------------
 set encoding=utf-8
@@ -155,9 +151,11 @@ nnoremap <C-K> <C-W><C-K>
 nnoremap <C-L> <C-W><C-L>
 nnoremap <C-H> <C-W><C-H>
 " Tabs (navigation)
-nnoremap tl :tabnext<CR>
-nnoremap th :tabprevious<CR>
-nnoremap td :tabclose<CR>
+nnoremap <S-H> :tabprevious<CR>
+nnoremap <S-L> :tabnext<CR>
+nnoremap <S-W> :tabclose<CR>
+" Terminal
+nnoremap tt :term<CR>
 " Go to tab by number
 noremap <leader>1 1gt
 noremap <leader>2 2gt
@@ -221,5 +219,6 @@ endif
 " ----------------- FZF -----------------------------------------
 nnoremap <S-T> :Files<CR>
 nnoremap <S-F> :Rg<CR>
+nnoremap <S-B> :Buffers<CR>
 
 
